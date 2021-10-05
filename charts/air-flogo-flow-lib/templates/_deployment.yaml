@@ -1,0 +1,75 @@
+{{- define "air-flogo-flow-lib.deployment.tpl" -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "flow.fullname" . }}
+  labels:
+    app: {{ template "flow.name" . }}
+    chart: {{ template "flow.chart" . }}
+    component: {{ .Values.deployment.name }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "flow.name" . }}
+      chart: {{ template "flow.chart" . }}
+      component: {{ .Values.deployment.name }}
+      release: {{ .Release.Name }}
+  replicas: {{ .Values.deployment.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "flow.name" . }}
+        chart: {{ template "flow.chart" . }}
+        component: {{ .Values.deployment.name }}
+        release: {{ .Release.Name }}
+    spec:
+      {{- if .Values.deployment.securityContext.enabled }}
+      securityContext:
+        fsGroup: {{ .Values.deployment.securityContext.fsGroup }}
+        runAsUser: {{ .Values.deployment.securityContext.runAsUser }}    
+      {{- end }}
+{{- include "flow.imagePullSecrets" . | indent 6 }}
+      containers:
+      - name: "{{ template "flow.deployment.fullname" . }}"
+        image: "{{ template "flow.image" . }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+        env:
+        {{- range $key, $val := .Values.deployment.env }}
+        - name: {{ $key }}
+          value: {{ $val | quote }}
+        {{- end }}
+        {{- $relname := .Release.Name -}}
+        {{- range $key, $val := .Values.deployment.prefixedenv }}
+        - name: {{ $key }}
+          value: {{ $relname }}-{{ $val }}
+        {{- end }}
+        resources:
+        {{- if .Values.deployment.livenessProbe.enabled }}
+        livenessProbe:
+          httpGet:
+            port: {{ .Values.deployment.livenessProbe.port }}
+            path: {{ .Values.deployment.livenessProbe.path }}
+          initialDelaySeconds: {{ .Values.deployment.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.deployment.livenessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.deployment.livenessProbe.timeoutSeconds }}
+          successThreshold: {{ .Values.deployment.livenessProbe.successThreshold }}
+          failureThreshold: {{ .Values.deployment.livenessProbe.failureThreshold }}
+        {{- end }}
+        {{- if .Values.deployment.readinessProbe.enabled }}
+        readinessProbe:
+          httpGet:
+            port: {{ .Values.deployment.livenessProbe.port }}
+            path: {{ .Values.deployment.livenessProbe.path }}
+          initialDelaySeconds: {{ .Values.deployment.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.deployment.readinessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.deployment.readinessProbe.timeoutSeconds }}
+          successThreshold: {{ .Values.deployment.readinessProbe.successThreshold }}
+          failureThreshold: {{ .Values.deployment.readinessProbe.failureThreshold }}
+        {{- end }}
+{{ toYaml .Values.deployment.resources | indent 10 }}
+{{- end -}}
+{{- define "air-flogo-flow-lib.deployment" -}}
+{{- include "air-flogo-flow-lib.util.merge" (append . "air-flogo-flow-lib.deployment.tpl") -}}
+{{- end -}}

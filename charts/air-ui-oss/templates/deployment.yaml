@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "ui.fullname" . }}
+  labels:
+    app: {{ template "ui.name" . }}
+    chart: {{ template "ui.chart" . }}
+    component: {{ .Values.deployment.name }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "ui.name" . }}
+      chart: {{ template "ui.chart" . }}
+      component: {{ .Values.deployment.name }}
+      release: {{ .Release.Name }}
+  replicas: {{ .Values.deployment.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "ui.name" . }}
+        chart: {{ template "ui.chart" . }}
+        component: {{ .Values.deployment.name }}
+        release: {{ .Release.Name }}
+    spec:
+      {{- if .Values.deployment.securityContext.enabled }}
+      securityContext:
+        fsGroup: {{ .Values.deployment.securityContext.fsGroup }}
+        runAsUser: {{ .Values.deployment.securityContext.runAsUser }}    
+      {{- end }}
+{{- include "ui.imagePullSecrets" . | indent 6 }}
+      containers:
+      - name: "{{ template "ui.deployment.fullname" . }}"
+        image: "{{ template "ui.image" . }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+        env:          
+        {{- include "ui.deployment.env" . | indent 10 }}   
+        resources:
+        {{- if .Values.deployment.livenessProbe.enabled }}
+        livenessProbe:
+          httpGet:
+            port: {{ .Values.deployment.livenessProbe.port }}
+            path: {{ .Values.deployment.livenessProbe.path }}
+          initialDelaySeconds: {{ .Values.deployment.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.deployment.livenessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.deployment.livenessProbe.timeoutSeconds }}
+          successThreshold: {{ .Values.deployment.livenessProbe.successThreshold }}
+          failureThreshold: {{ .Values.deployment.livenessProbe.failureThreshold }}
+        {{- end }}
+        {{- if .Values.deployment.readinessProbe.enabled }}
+        readinessProbe:
+          httpGet:
+            port: {{ .Values.deployment.livenessProbe.port }}
+            path: {{ .Values.deployment.livenessProbe.path }}
+          initialDelaySeconds: {{ .Values.deployment.readinessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.deployment.readinessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.deployment.readinessProbe.timeoutSeconds }}
+          successThreshold: {{ .Values.deployment.readinessProbe.successThreshold }}
+          failureThreshold: {{ .Values.deployment.readinessProbe.failureThreshold }}
+        {{- end }}
+{{ toYaml .Values.deployment.resources | indent 10 }}
+        volumeMounts:
+        {{- if .Values.deployment.configFile }}
+        - name: config-volume
+          mountPath: /usr/share/nginx/html/assets/data
+        {{- end }}
+      volumes:
+      {{- if .Values.deployment.configFile }}
+      - name: config-volume
+        configMap:
+          name: {{ template "configmap.ui.fullname" . }}
+      {{- end }}
+        

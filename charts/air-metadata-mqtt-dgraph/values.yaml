@@ -1,0 +1,75 @@
+image:
+  registry: public.ecr.aws
+  repository: tibcolabs/labs-air-metadata-mqtt-dgraph
+  tag: latest
+  ## Specify a imagePullPolicy
+  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ##
+  pullPolicy: Always
+  ## Optionally specify an array of imagePullSecrets.
+  ## Secrets must be manually created in the namespace.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ##
+  #pullSecrets:
+
+
+deployment:
+  name: iotmetadata-mqtt-dgraph
+
+  ## Pod Security Context
+  securityContext:
+    enabled: false
+    fsGroup: 1001
+    runAsUser: 1001
+
+  ## Configure resource requests
+  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+  ##
+  resources:
+    limits:
+      memory: 500Mi
+
+  ## Configure environments 
+  ## ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+  ##
+  env:
+    FLOGO_APP_PROPS_ENV: "auto"
+    MQTTTrigger.Topic: "EdgexGatewayMetadata"
+    MQTTTrigger.MaximumQOS: "2"
+    Mqtt.IoTMQTT.Username: "mqtt_admin"
+    Mqtt.IoTMQTT.Password: "SECRET:VkR1c1KNlYxTqP8IhmDOxzpwJUfP9U1rKoM="
+    GraphBuilder_dgraph.IoTDgraph.Username: "admin"
+    GraphBuilder_dgraph.IoTDgraph.Password: "SECRET:idjwvNNJa3V9tgVgf9jYTtXHZKGH"
+
+  ## Environments that have to be prefixed with the release name
+  prefixedenv:
+    Mqtt.IoTMQTT.Broker_URL : mosquitto:1883
+    GraphBuilder_dgraph.IoTDgraph.Dgraph_Server_URL: dgraph-alpha:9080
+
+  ## Number of deployment pods
+  ##
+  replicaCount: 1
+  
+  ## Configure extra options for liveness and readiness probes
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes)
+  ##
+  livenessProbe:
+    enabled: false
+    port: 8000
+    path: /
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+
+  readinessProbe:
+    enabled: false
+    port: 8000
+    path: /
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1

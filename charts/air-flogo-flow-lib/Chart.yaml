@@ -1,0 +1,6 @@
+apiVersion: v2
+name: air-flogo-flow-lib
+description: A Helm chart for air flogo flows
+type: library
+version: 0.1.0
+appVersion: "latest"

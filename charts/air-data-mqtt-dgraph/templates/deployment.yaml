@@ -1,0 +1,4 @@
+{{- include "air-flogo-flow-lib.deployment" (list . "air-data-mqtt-dgraph.deployment") -}}
+{{- define "air-data-mqtt-dgraph.deployment" -}}
+apiVersion: apps/v1
+{{- end -}}

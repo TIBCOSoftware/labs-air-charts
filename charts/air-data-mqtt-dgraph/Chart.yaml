@@ -1,0 +1,10 @@
+apiVersion: v2
+name: air-data-mqtt-dgraph
+version: 0.1.0
+appVersion: latest
+description: A Helm chart for air data mqtt to dgraph gateway
+
+dependencies:
+  - name: air-flogo-flow-lib
+    version: 0.1.0
+    repository: "file://../air-flogo-flow-lib"
