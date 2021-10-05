@@ -1,0 +1,15 @@
+{{ if .Values.deployment.configFile }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "configmap.ui.fullname" . }}
+  labels:
+    app: {{ template "ui.name" . }}
+    chart: {{ template "ui.chart" . }}
+    component: {{ .Values.deployment.name }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  appConfig.json: |-
+  {{ toJson .Values.deployment.configFile | indent 2 }}
+{{ end }}
