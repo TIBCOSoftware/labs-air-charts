@@ -18,5 +18,5 @@ release_name=$1
 
 echo "Installing ${release_name}"
 
-helm install ${release_name} ./ -f air/values-minikube.yaml
+helm install ${release_name} ./air -f air/values-minikube.yaml
 
