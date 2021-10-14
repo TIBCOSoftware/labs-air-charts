@@ -36,6 +36,11 @@ spec:
         image: "{{ template "flow.image" . }}"
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
         env:
+        {{- if .Values.deployment.rawEnv }}
+        {{- with .Values.deployment.rawEnv}}
+          {{- toYaml . | nindent 9 }}
+        {{- end }}
+        {{- end }}
         {{- range $key, $val := .Values.deployment.env }}
         - name: {{ $key }}
           value: {{ $val | quote }}
