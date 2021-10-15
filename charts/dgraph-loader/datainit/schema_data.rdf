@@ -20,6 +20,9 @@ protocol:string .
 method:string .
 address:string .
 router: string .
+routerPort: string .
+deployNetwork: string .
+devicesMetadata: string .
 port:int .
 path:string .
 format:string .
@@ -72,6 +75,8 @@ windowSize:int .
 deviceNames:string .
 hostname:string .
 status:string .
+flowConfiguration:string .
+logLevel:string .
 pipeline:string .
 brokerURL:string .
 maximumQOS:string .
@@ -107,10 +112,10 @@ loginTimeout:string .
 protocolType:string .
 dataStoreType:string .
 pipelineType:string .
+deployerType:string .
 inputType:string .
 platform:string .
-scope:string .
-inputTemplate:string .
+scope: string .
 gateway_subscription:[uid] @reverse @count .
 gateway_publisher:[uid] @reverse @count .
 gateway_pipeline:[uid] @reverse @count .
@@ -135,11 +140,14 @@ type Gateway {
     description: string
     address: string
     router: string
+    routerPort: string
+    deployNetwork: string
     latitude: float
     longitude: float
     accessToken: string
     platform: string
     username: string
+    devicesMetadata: string
     createdts: int
     updatedts: int
     <~gateway_device>: uid
@@ -169,11 +177,15 @@ type Pipeline {
     type: string
     pipeline: string
     pipelineType: string
+    deployerType: string
     protocolType: string
     dataStoreType: string
     created: int
     modified: int
+    description: string
     status: string
+    flowConfiguration: string
+    logLevel: string
     <~pipeline_protocol>: uid
     <~pipeline_datastore>: uid
     <~pipeline_filter>: uid
@@ -249,6 +261,7 @@ type Protocol {
     fetchMinBytes: string
     fetchMaxWait: string
     heartbeatInterval: string
+    scope: string
 }
 type DataStore {
     uuid: string
@@ -273,6 +286,7 @@ type DataStore {
     redirectURI: string
     loginTimeout: string
     url: string
+    scope: string
 }
 type Filter {
     deviceNames: string
@@ -292,7 +306,7 @@ type Model {
     description: string
     inputType: string
     url: string
+    platform: string
     scope: string
-    inputTemplate: string
 }
 
