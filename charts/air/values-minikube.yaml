@@ -2,6 +2,7 @@ ingress-nginx:
   controller:
     config:
       ssl-redirect: "false"
+    watchIngressWithoutClass: true
     service:
       type: NodePort
 
