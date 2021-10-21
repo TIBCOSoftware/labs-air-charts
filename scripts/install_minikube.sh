@@ -2,6 +2,8 @@
 
 minikube start --driver=virtualbox --memory 4096 --cpus 2
 
+sleep 15s
+
 release_name=$1
 
 echo "Installing ${release_name}"
