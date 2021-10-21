@@ -42,5 +42,5 @@ spec:
             service:
               name: {{ template "dgraph.alpha.fullname" . }}
               port:
-                number: 80
+                number: 8080
 {{- end }}
