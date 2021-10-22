@@ -9,5 +9,5 @@ mkdir -p $installer_target_path
 
 helm dependency update charts/air
 cp -r charts/air $installer_target_path
-cp scripts/delete_minikube.sh $installer_target_path
-cp scripts/install_minikube.sh $installer_target_path
+cp scripts/delete_* $installer_target_path
+cp scripts/install_* $installer_target_path
