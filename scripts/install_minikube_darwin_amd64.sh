@@ -16,6 +16,8 @@ minikube addons enable ingress-dns
 
 minikube_ip=$(minikube ip)
 
+sudo rm -rf /etc/resolver/*-air
+
 sudo mkdir -p /etc/resolver
 sudo echo "domain air
 nameserver $minikube_ip
