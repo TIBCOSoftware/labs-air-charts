@@ -21,11 +21,11 @@ resolver_file="/etc/resolvconf/resolv.conf.d/head"
 if [ -f "$resolver_file" ]; then
     # Delete search entry
     sudo sed -i '/#labs-air/d' $resolver_file
-    sudo resolvconf -u
 fi
 
 sudo echo "search air #labs-air
 nameserver $minikube_ip #labs-air" | sudo tee /etc/resolvconf/resolv.conf.d/head  > /dev/null
+sudo resolvconf -u
 
 
 
