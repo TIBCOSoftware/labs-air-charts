@@ -16,11 +16,16 @@ minikube addons enable ingress-dns
 
 minikube_ip=$(minikube ip)
 
-sudo rm -rf /etc/resolvconf/resolv.conf.d/base
+resolver_file="/etc/resolvconf/resolv.conf.d/head"
 
-sudo echo "search air
-nameserver $minikube_ip
-timeout 5" | sudo tee /etc/resolvconf/resolv.conf.d/base  > /dev/null
+if [ -f "$resolver_file" ]; then
+    # Delete search entry
+    sudo sed -i '/#labs-air/d' $resolver_file
+    sudo resolvconf -u
+fi
+
+sudo echo "search air #labs-air
+nameserver $minikube_ip #labs-air" | sudo tee /etc/resolvconf/resolv.conf.d/head  > /dev/null
 
 
 
