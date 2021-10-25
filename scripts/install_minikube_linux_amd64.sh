@@ -24,7 +24,8 @@ if [ -f "$resolver_file" ]; then
 fi
 
 sudo echo "search air #labs-air
-nameserver $minikube_ip #labs-air" | sudo tee /etc/resolvconf/resolv.conf.d/head  > /dev/null
+nameserver $minikube_ip #labs-air
+nameserver 8.8.8.8" | sudo tee /etc/resolvconf/resolv.conf.d/head  > /dev/null
 sudo resolvconf -u
 
 
