@@ -1,0 +1,5 @@
+apiVersion: v2
+name: dgraph-loader
+version: 0.0.1
+appVersion: latest
+description: Dgraph Extension that includes data initialization loading, ingress, etc...

@@ -1,0 +1,86 @@
+image:
+  registry: public.ecr.aws
+  repository: tibcolabs/labs-air-data-mqtt-dgraph
+  tag: latest
+  ## Specify a imagePullPolicy
+  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ##
+  pullPolicy: Always
+  ## Optionally specify an array of imagePullSecrets.
+  ## Secrets must be manually created in the namespace.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ##
+  #pullSecrets:
+
+
+deployment:
+  name: iotdata-mqtt-dgraph
+
+  ## Pod Security Context
+  securityContext:
+    enabled: false
+    fsGroup: 1001
+    runAsUser: 1001
+
+  ## Configure resource requests
+  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+  ##
+  resources:
+    limits:
+      memory: 500Mi
+
+  ## Configure environments 
+  ## ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+  ##
+  env:
+    FLOGO_APP_PROPS_ENV: "auto"
+    MQTTTrigger_Topic: "EdgexGatewayData"
+    MQTTTrigger_MaximumQOS: "2"
+    Mqtt_IoTMQTT_Username: "mqtt_admin"
+    Mqtt_IoTMQTT_Password: "SECRET:VkR1c1KNlYxTqP8IhmDOxzpwJUfP9U1rKoM="
+    GraphBuilder_dgraph_IoTDgraph_Username: "admin"
+    GraphBuilder_dgraph_IoTDgraph_Password: "SECRET:idjwvNNJa3V9tgVgf9jYTtXHZKGH"
+    Mqtt_IoTMQTT_ID: "air_data_mqtt_dgraph"
+  
+#  rawEnv:
+#    - name: Mqtt_IoTMQTT_ID
+#      value: "thisIsIt"
+#    - name: Mqtt_IoTMQTT_ID
+#      value: "thisIsIt"
+#      valueFrom:
+#        fieldRef:
+#          fieldPath: status.podIP
+
+  ## Environments that have to be prefixed with the release name
+  prefixedenv:
+    Mqtt_IoTMQTT_Broker_URL : mosquitto:1883
+    GraphBuilder_dgraph_IoTDgraph_Dgraph_Server_URL: dgraph-alpha:9080
+
+
+  ## Number of deployment pods
+  ##
+  replicaCount: 1
+  
+  ## Configure extra options for liveness and readiness probes
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes)
+  ##
+  livenessProbe:
+    enabled: false
+    port: 8000
+    path: /
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+
+  readinessProbe:
+    enabled: false
+    port: 8000
+    path: /
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1

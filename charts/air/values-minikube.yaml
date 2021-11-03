@@ -1,0 +1,83 @@
+ingress-nginx:
+  controller:
+    config:
+      ssl-redirect: "false"
+    watchIngressWithoutClass: true
+    service:
+      type: NodePort
+
+air-ui-oss:
+  enabled: true
+  deployment:
+    service:
+      type: NodePort
+      nodePort: 31884
+    ingress:
+      hostname: ui.oss.labs.air
+    configFile:
+      {
+        'dgraphUrl': 'http://dgraph.alpha.labs.air',
+        'dgraphBasicAuthEnabled': false,
+        'localGatewayUrl': 'http://localhost:8000',
+        'remoteGatewayUrl': 'http://corsanywhere.labs.air',
+        'lightcraneEndpointUrl': 'http://localhost:5408'
+      }
+
+mosquitto:
+  enabled: true
+  service:
+    type: NodePort
+  ports:
+    mqtt:
+      port: 1883
+      nodePort: 31883
+#  authentication:
+#    passwordEntries: |-
+#      mqtt_admin:$7$101$jP6Xhsu/Ez1c4fWy$F4j7SDBuDaWzWL8FBEqS/Prbn1aB0RBjN8gjpuN8C4OrFSA+EnUbmj0stWiU37Gve1ukRRMqHd38wjlpuNlb0g==
+
+#    passwordFilePath: "/etc/mosquitto/passwordfile"
+#  authorization:
+    #acls: ""
+    # To use authorizations with mosquitto, you can set a list of per user or pattern-based rules.
+    # reference https://mosquitto.org/man/mosquitto-conf-5.html for further information.
+    # For example:
+#    acls: |-
+#        user mqtt_admin
+#        topic readwrite mqtt_admin/#
+ 
+
+configmap:
+  ui:
+    name: ui-config-map
+
+dgraphAlphaName: dgraph-alpha
+
+dgraph:
+  enabled: true
+  ratel:
+    enabled: true
+    service:
+      type: NodePort
+    ingress:
+      enabled: true
+      hostname: dgraph.ratel.labs.air
+      annotations:
+        kubernetes.io/ingress.class: "nginx"
+  zero:
+    replicaCount: 1
+    persistence:
+      size: 1Gi
+  alpha:
+    replicaCount: 1
+    service:
+      type: NodePort
+    ingress:
+      enabled: true
+      hostname: dgraph.alpha.labs.air
+      annotations: 
+        nginx.ingress.kubernetes.io/enable-cors: "true"
+        kubernetes.io/ingress.class: "nginx"
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    persistence:
+      size: 1Gi
+    extraFlags: "--security whitelist=172.17.0.0:172.20.0.0 -v=3"

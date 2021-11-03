@@ -1,0 +1,88 @@
+image:
+  registry: public.ecr.aws
+  repository: tibcolabs/labs-air-ui-oss
+  tag: latest
+  ## Specify a imagePullPolicy
+  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ##
+  pullPolicy: Always
+  ## Optionally specify an array of imagePullSecrets.
+  ## Secrets must be manually created in the namespace.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  ##
+  #pullSecrets:
+
+
+deployment:
+  name: ui-oss
+  monitorLabel: ui-oss
+
+  ## Pod Security Context
+  securityContext:
+    enabled: false
+    fsGroup: 1001
+    runAsUser: 1001
+
+  ## Configure resource requests
+  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+  ##
+  resources:
+    limits:
+      memory: 500Mi
+
+  ## Configure environments 
+  ## ref: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+  ##
+  env:
+
+  ## Number of deployment pods
+  ##
+  replicaCount: 1
+
+  ## Kubernetes configuration
+  ## For minikube, set this to NodePort, elsewhere use LoadBalancer
+  ##
+  service:
+    name: service
+    type: LoadBalancer
+    http_port: 80
+    targetPort: 80
+  
+
+  ingress:
+    enabled: true
+    name: ui-oss-ingress
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+
+  configFile: {}
+
+  
+  ## Configure extra options for liveness and readiness probes
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes)
+  ##
+  livenessProbe:
+    enabled: false
+    port: 8000
+    path: /
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+
+  readinessProbe:
+    enabled: false
+    port: 8000
+    path: /
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 6
+    successThreshold: 1
+
+configmap:
+  ui:
+    name: ui-config-map

@@ -1,0 +1,5 @@
+apiVersion: v2
+name: air-ui-oss
+version: 0.1.0
+appVersion: latest
+description: A Helm chart for air ui oss
