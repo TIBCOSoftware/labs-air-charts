@@ -24,8 +24,10 @@ if [ -f "$resolver_file" ]; then
 fi
 
 sudo echo "search air #labs-air
+# nameserver 192.168.1.1 #in same cases you need to add your local DNS server here
 nameserver $minikube_ip #labs-air
 nameserver 8.8.8.8" | sudo tee /etc/resolvconf/resolv.conf.d/head  > /dev/null
+sudo resolvconf --enable-updates
 sudo resolvconf -u
 
 
