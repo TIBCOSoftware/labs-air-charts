@@ -1,9 +1,16 @@
 @echo off
-minikube start --driver=hyperv  --memory 4096 --cpus 2 
+
+set driver_name=%AIR_MINIKUBE_DRIVER%
+
+if "%driver_name%"=="" set driver_name=hyperv
+
+minikube start --driver=%driver_name%  --memory 4096 --cpus 2  
 
 timeout 15
 
 set release_name=%1
+
+if "%release_name%"=="" set release_name=myair
 
 echo "Installing %release_name%"
 
