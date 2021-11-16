@@ -1,10 +1,10 @@
 #!/bin/sh
 
-minikube start --driver=virtualbox --memory 4096 --cpus 2
+minikube start --driver=${AIR_MINIKUBE_DRIVER:-virtualbox} --memory 4096 --cpus 2
 
 sleep 15s
 
-release_name=$1
+release_name=${1:-myair}
 
 echo "Installing ${release_name}"
 
@@ -24,10 +24,8 @@ if [ -f "$resolver_file" ]; then
 fi
 
 sudo echo "search air #labs-air
-# nameserver 192.168.1.1 #in same cases you need to add your local DNS server here
 nameserver $minikube_ip #labs-air
 nameserver 8.8.8.8" | sudo tee /etc/resolvconf/resolv.conf.d/head  > /dev/null
-sudo resolvconf --enable-updates
 sudo resolvconf -u
 
 
