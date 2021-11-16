@@ -1,10 +1,10 @@
 #!/bin/sh
 
-minikube start --driver=virtualbox --memory 4096 --cpus 2
+minikube start --driver=${AIR_MINIKUBE_DRIVER:-virtualbox} --memory 4096 --cpus 2
 
 sleep 15s
 
-release_name=$1
+release_name=${1:-myair}
 
 echo "Installing ${release_name}"
 

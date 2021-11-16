@@ -1,6 +1,6 @@
 #!/bin/sh
 
-release_name=$1
+release_name=${1:-myair}
 
 resolver_file="/etc/resolvconf/resolv.conf.d/head"
 
