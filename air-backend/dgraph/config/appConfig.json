@@ -1,0 +1,7 @@
+{
+    "dgraphUrl":"http://localhost:8080",
+    "dgraphBasicAuthEnabled":false,
+    "localGatewayUrl":"http://localhost:8000",
+    "remoteGatewayUrl":"http://corsanywhere.labs.air",
+    "lightcraneEndpointUrl":"http://localhost:5408"
+}

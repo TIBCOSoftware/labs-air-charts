@@ -1,0 +1,105 @@
+version: "3.2"
+networks:
+  air-network:
+    driver: bridge
+services:
+  zero:
+    image: dgraph/dgraph:v21.03.1
+    networks:
+      - air-network
+    volumes:
+      - /tmp/data:/dgraph
+    ports:
+      - 5080:5080
+      - 6080:6080
+    restart: on-failure
+    command: dgraph zero --my=zero:5080
+  alpha:
+    image: dgraph/dgraph:v21.03.1
+    networks:
+      - air-network
+    volumes:
+      - /tmp/data:/dgraph
+    ports:
+      - 8080:8080
+      - 9080:9080
+    restart: on-failure
+    command: dgraph alpha --my=alpha:7080 --zero=zero:5080 --security whitelist=1.0.0.0:223.255.255.255 -v=3
+  loader:
+    depends_on:
+      - alpha
+      - zero
+    image: dgraph/dgraph:v21.03.1
+    networks:
+      - air-network
+    volumes:
+      - "./dgraph:/etc/loader"
+    restart: on-failure
+    command: dgraph live -f /etc/loader/seed_data.rdf -s /etc/loader/schema_data.rdf -a alpha:9080 -z  zero:5080
+  mosquitto:
+    image: eclipse-mosquitto:1.6.12
+    networks:
+      - air-network
+    volumes:
+      - "./mosquitto:/mosquitto"
+    ports:
+      - "31883:31883"
+  labs-air-ui:
+    image: public.ecr.aws/tibcolabs/labs-air-ui-oss
+    networks:
+      - air-network
+    volumes:
+      - "./dgraph/config:/usr/share/nginx/html/assets/data"
+    ports:
+      - "8081:80"
+  air-data-mqtt-dgraph:
+    depends_on:
+      - mosquitto
+    image: public.ecr.aws/tibcolabs/labs-air-data-mqtt-dgraph
+    networks:
+      - air-network
+    environment:
+      - FLOGO_APP_PROPS_ENV=auto
+      - MQTTTrigger_Topic="EdgexGatewayData"
+      - MQTTTrigger_MaximumQOS=2
+      - Mqtt_IoTMQTT_Username="mqtt_admin"
+      - Mqtt_IoTMQTT_Password="SECRET:VkR1c1KNlYxTqP8IhmDOxzpwJUfP9U1rKoM="
+      - GraphBuilder_dgraph_IoTDgraph_Username="admin"
+      - GraphBuilder_dgraph_IoTDgraph_Password="SECRET:idjwvNNJa3V9tgVgf9jYTtXHZKGH"
+      - Mqtt_IoTMQTT_ID="air_data_mqtt_dgraph"
+      - Mqtt_IoTMQTT_Broker_URL=mosquitto:31883
+      - GraphBuilder_dgraph_IoTDgraph_Dgraph_Server_URL=alpha:9080
+  air-metadata-mqtt-dgraph:
+    depends_on:
+      - mosquitto
+    image: public.ecr.aws/tibcolabs/labs-air-metadata-mqtt-dgraph
+    networks:
+      - air-network
+    environment:
+      - FLOGO_APP_PROPS_ENV=auto
+      - MQTTTrigger_Topic="EdgexGatewayMetadata"
+      - MQTTTrigger_MaximumQOS=2
+      - Mqtt_IoTMQTT_Username="mqtt_admin"
+      - Mqtt_IoTMQTT_Password="SECRET:VkR1c1KNlYxTqP8IhmDOxzpwJUfP9U1rKoM="
+      - GraphBuilder_dgraph_IoTDgraph_Username="admin"
+      - GraphBuilder_dgraph_IoTDgraph_Password="SECRET:idjwvNNJa3V9tgVgf9jYTtXHZKGH"
+      - Mqtt_IoTMQTT_ID="air_metadata_mqtt_dgraph"
+      - Mqtt_IoTMQTT_Broker_URL=mosquitto:31883
+      - GraphBuilder_dgraph_IoTDgraph_Dgraph_Server_URL=alpha:9080
+  air-notification-mqtt-dgraph:
+    depends_on:
+      - mosquitto
+    image: public.ecr.aws/tibcolabs/labs-air-notification-mqtt-dgraph
+    networks:
+      - air-network
+    environment:
+      - FLOGO_APP_PROPS_ENV=auto
+      - MQTTTrigger_Topic="EdgexGatewayNotification"
+      - MQTTTrigger_MaximumQOS=2
+      - Mqtt_IoTMQTT_Username="mqtt_admin"
+      - Mqtt_IoTMQTT_Password="SECRET:VkR1c1KNlYxTqP8IhmDOxzpwJUfP9U1rKoM="
+      - GraphBuilder_dgraph_IoTDgraph_Username="admin"
+      - GraphBuilder_dgraph_IoTDgraph_Password="SECRET:idjwvNNJa3V9tgVgf9jYTtXHZKGH"
+      - Mqtt_IoTMQTT_ID="air_notification_mqtt_dgraph"
+      - Mqtt_IoTMQTT_Broker_URL=mosquitto:31883
+      - GraphBuilder_dgraph_IoTDgraph_Dgraph_Server_URL=alpha:9080
