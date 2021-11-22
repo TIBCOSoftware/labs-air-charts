@@ -49,7 +49,7 @@ services:
     networks:
       - air-network
     volumes:
-      - "./dgraph/config:/usr/share/nginx/html/assets/data"
+      - "./ui/config:/usr/share/nginx/html/assets/data"
     ports:
       - "8081:80"
   air-data-mqtt-dgraph:
