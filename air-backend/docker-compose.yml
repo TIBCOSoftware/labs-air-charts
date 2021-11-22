@@ -60,13 +60,13 @@ services:
       - air-network
     environment:
       - FLOGO_APP_PROPS_ENV=auto
-      - MQTTTrigger_Topic="EdgexGatewayData"
+      - MQTTTrigger_Topic=EdgexGatewayData
       - MQTTTrigger_MaximumQOS=2
-      - Mqtt_IoTMQTT_Username="mqtt_admin"
-      - Mqtt_IoTMQTT_Password="SECRET:VkR1c1KNlYxTqP8IhmDOxzpwJUfP9U1rKoM="
-      - GraphBuilder_dgraph_IoTDgraph_Username="admin"
-      - GraphBuilder_dgraph_IoTDgraph_Password="SECRET:idjwvNNJa3V9tgVgf9jYTtXHZKGH"
-      - Mqtt_IoTMQTT_ID="air_data_mqtt_dgraph"
+      - Mqtt_IoTMQTT_Username=mqtt_admin
+      - Mqtt_IoTMQTT_Password=SECRET:VkR1c1KNlYxTqP8IhmDOxzpwJUfP9U1rKoM=
+      - GraphBuilder_dgraph_IoTDgraph_Username=admin
+      - GraphBuilder_dgraph_IoTDgraph_Password=SECRET:idjwvNNJa3V9tgVgf9jYTtXHZKGH
+      - Mqtt_IoTMQTT_ID=air_data_mqtt_dgraph
       - Mqtt_IoTMQTT_Broker_URL=mosquitto:31883
       - GraphBuilder_dgraph_IoTDgraph_Dgraph_Server_URL=alpha:9080
   air-metadata-mqtt-dgraph:
@@ -77,13 +77,13 @@ services:
       - air-network
     environment:
       - FLOGO_APP_PROPS_ENV=auto
-      - MQTTTrigger_Topic="EdgexGatewayMetadata"
+      - MQTTTrigger_Topic=EdgexGatewayMetadata
       - MQTTTrigger_MaximumQOS=2
-      - Mqtt_IoTMQTT_Username="mqtt_admin"
-      - Mqtt_IoTMQTT_Password="SECRET:VkR1c1KNlYxTqP8IhmDOxzpwJUfP9U1rKoM="
-      - GraphBuilder_dgraph_IoTDgraph_Username="admin"
-      - GraphBuilder_dgraph_IoTDgraph_Password="SECRET:idjwvNNJa3V9tgVgf9jYTtXHZKGH"
-      - Mqtt_IoTMQTT_ID="air_metadata_mqtt_dgraph"
+      - Mqtt_IoTMQTT_Username=mqtt_admin
+      - Mqtt_IoTMQTT_Password=SECRET:VkR1c1KNlYxTqP8IhmDOxzpwJUfP9U1rKoM=
+      - GraphBuilder_dgraph_IoTDgraph_Username=admin
+      - GraphBuilder_dgraph_IoTDgraph_Password=SECRET:idjwvNNJa3V9tgVgf9jYTtXHZKGH
+      - Mqtt_IoTMQTT_ID=air_metadata_mqtt_dgraph
       - Mqtt_IoTMQTT_Broker_URL=mosquitto:31883
       - GraphBuilder_dgraph_IoTDgraph_Dgraph_Server_URL=alpha:9080
   air-notification-mqtt-dgraph:
@@ -94,12 +94,12 @@ services:
       - air-network
     environment:
       - FLOGO_APP_PROPS_ENV=auto
-      - MQTTTrigger_Topic="EdgexGatewayNotification"
+      - MQTTTrigger_Topic=EdgexGatewayNotification
       - MQTTTrigger_MaximumQOS=2
-      - Mqtt_IoTMQTT_Username="mqtt_admin"
-      - Mqtt_IoTMQTT_Password="SECRET:VkR1c1KNlYxTqP8IhmDOxzpwJUfP9U1rKoM="
-      - GraphBuilder_dgraph_IoTDgraph_Username="admin"
-      - GraphBuilder_dgraph_IoTDgraph_Password="SECRET:idjwvNNJa3V9tgVgf9jYTtXHZKGH"
-      - Mqtt_IoTMQTT_ID="air_notification_mqtt_dgraph"
+      - Mqtt_IoTMQTT_Username=mqtt_admin
+      - Mqtt_IoTMQTT_Password=SECRET:VkR1c1KNlYxTqP8IhmDOxzpwJUfP9U1rKoM=
+      - GraphBuilder_dgraph_IoTDgraph_Username=admin
+      - GraphBuilder_dgraph_IoTDgraph_Password=SECRET:idjwvNNJa3V9tgVgf9jYTtXHZKGH
+      - Mqtt_IoTMQTT_ID=air_notification_mqtt_dgraph
       - Mqtt_IoTMQTT_Broker_URL=mosquitto:31883
       - GraphBuilder_dgraph_IoTDgraph_Dgraph_Server_URL=alpha:9080
