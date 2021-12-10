@@ -45,7 +45,7 @@ services:
     ports:
       - "31883:31883"
   labs-air-ui:
-    image: public.ecr.aws/tibcolabs/labs-air-ui-oss
+    image: public.ecr.aws/tibcolabs/labs-air-ui-oss:0.6.0
     networks:
       - air-network
     volumes:
@@ -55,7 +55,7 @@ services:
   air-data-mqtt-dgraph:
     depends_on:
       - mosquitto
-    image: public.ecr.aws/tibcolabs/labs-air-data-mqtt-dgraph
+    image: public.ecr.aws/tibcolabs/labs-air-data-mqtt-dgraph:0.6.0
     networks:
       - air-network
     environment:
@@ -72,7 +72,7 @@ services:
   air-metadata-mqtt-dgraph:
     depends_on:
       - mosquitto
-    image: public.ecr.aws/tibcolabs/labs-air-metadata-mqtt-dgraph
+    image: public.ecr.aws/tibcolabs/labs-air-metadata-mqtt-dgraph:0.6.0
     networks:
       - air-network
     environment:
@@ -89,7 +89,7 @@ services:
   air-notification-mqtt-dgraph:
     depends_on:
       - mosquitto
-    image: public.ecr.aws/tibcolabs/labs-air-notification-mqtt-dgraph
+    image: public.ecr.aws/tibcolabs/labs-air-notification-mqtt-dgraph:0.6.0
     networks:
       - air-network
     environment:
