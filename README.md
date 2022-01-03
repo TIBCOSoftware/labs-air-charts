@@ -4,6 +4,8 @@ Project AIR is an IoT platform for the registration of devices, process of IoT p
 
 For more information please visit [Project AIR](https://tibcosoftware.github.io/labs-air/) docs page.
 
+![Static Analysis](https://github.com/TIBCOSoftware/labs-air-charts/workflows/Static%20Analysis/badge.svg)
+
 ## Introduction
 
 This chart bootstraps a [Project AIR](https://tibcosoftware.github.io/labs-air/) deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
