@@ -2,5 +2,6 @@
 .DS_Store
 charts/air/charts/*
 dist
+node_modules
 
 
