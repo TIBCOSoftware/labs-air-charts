@@ -4,7 +4,7 @@ networks:
     driver: bridge
 services:
   zero:
-    image: dgraph/dgraph:v21.03.1
+    image: dgraph/dgraph:${DGRAPH_VERSION}
     networks:
       - air-network
     volumes:
@@ -15,7 +15,7 @@ services:
     restart: on-failure
     command: dgraph zero --my=zero:5080
   alpha:
-    image: dgraph/dgraph:v21.03.1
+    image: dgraph/dgraph:${DGRAPH_VERSION}
     networks:
       - air-network
     volumes:
@@ -29,7 +29,7 @@ services:
     depends_on:
       - alpha
       - zero
-    image: dgraph/dgraph:v21.03.1
+    image: dgraph/dgraph:${DGRAPH_VERSION}
     networks:
       - air-network
     volumes:
@@ -37,7 +37,7 @@ services:
     restart: on-failure
     command: dgraph live -f /etc/loader/seed_data.rdf -s /etc/loader/schema_data.rdf -a alpha:9080 -z  zero:5080
   mosquitto:
-    image: eclipse-mosquitto:1.6.12
+    image: eclipse-mosquitto:${ECLIPSE_MOSQUITTO_VERSION}
     networks:
       - air-network
     volumes:
@@ -45,7 +45,7 @@ services:
     ports:
       - "31883:31883"
   labs-air-ui:
-    image: public.ecr.aws/tibcolabs/labs-air-ui-oss:0.7.0
+    image: public.ecr.aws/tibcolabs/labs-air-ui-oss:${LABS_AIR_VERSION}
     networks:
       - air-network
     volumes:
@@ -55,7 +55,7 @@ services:
   air-data-mqtt-dgraph:
     depends_on:
       - mosquitto
-    image: public.ecr.aws/tibcolabs/labs-air-data-mqtt-dgraph:0.7.0
+    image: public.ecr.aws/tibcolabs/labs-air-data-mqtt-dgraph:${LABS_AIR_VERSION}
     networks:
       - air-network
     environment:
@@ -72,7 +72,7 @@ services:
   air-metadata-mqtt-dgraph:
     depends_on:
       - mosquitto
-    image: public.ecr.aws/tibcolabs/labs-air-metadata-mqtt-dgraph:0.7.0
+    image: public.ecr.aws/tibcolabs/labs-air-metadata-mqtt-dgraph:${LABS_AIR_VERSION}
     networks:
       - air-network
     environment:
@@ -89,7 +89,7 @@ services:
   air-notification-mqtt-dgraph:
     depends_on:
       - mosquitto
-    image: public.ecr.aws/tibcolabs/labs-air-notification-mqtt-dgraph:0.7.0
+    image: public.ecr.aws/tibcolabs/labs-air-notification-mqtt-dgraph:${LABS_AIR_VERSION}
     networks:
       - air-network
     environment:
