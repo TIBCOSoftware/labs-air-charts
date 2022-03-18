@@ -1,6 +1,7 @@
 version: "3.2"
 networks:
   air-network:
+    name: edgex_edgex-network
     driver: bridge
 services:
   zero:
