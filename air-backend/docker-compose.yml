@@ -1,6 +1,7 @@
 version: "3.2"
 networks:
   air-network:
+    name: edgex_edgex-network
     driver: bridge
 services:
   zero:
@@ -103,3 +104,17 @@ services:
       - Mqtt_IoTMQTT_ID=air_notification_mqtt_dgraph
       - Mqtt_IoTMQTT_Broker_URL=mosquitto:31883
       - GraphBuilder_dgraph_IoTDgraph_Dgraph_Server_URL=alpha:9080
+  air-pipeline-service:
+    depends_on:
+      - mosquitto
+    image: public.ecr.aws/tibcolabs/labs-air-pipeline-service:${LABS_AIR_VERSION}
+    networks:
+      - air-network
+    environment:
+      - FLOGO_APP_PROPS_ENV=auto
+      - DgraphURL=alpha:8080/query
+      - DgraphUsername:admin
+      - DgraphPassword=SECRET:idjwvNNJa3V9tgVgf9jYTtXHZKGH
+      - Logging_LogLevel=INFO
+    ports:
+      - 10107:9999
