@@ -27,15 +27,21 @@ spec:
       {{- if .Values.deployment.securityContext.enabled }}
       securityContext:
         fsGroup: {{ .Values.deployment.securityContext.fsGroup }}
-        runAsUser: {{ .Values.deployment.securityContext.runAsUser }}    
+        runAsUser: {{ .Values.deployment.securityContext.runAsUser }}
       {{- end }}
 {{- include "ui.imagePullSecrets" . | indent 6 }}
       containers:
       - name: "{{ template "ui.deployment.fullname" . }}"
         image: "{{ template "ui.image" . }}"
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
-        env:          
-        {{- include "ui.deployment.env" . | indent 10 }}   
+        env:
+        {{- include "ui.deployment.env" . | indent 10 }}
+        {{- if eq .Values.deployment.service.type "ClusterIP" }}
+        ports:
+        - containerPort: {{ .Values.deployment.service.http_port }}
+          name: http-service
+          protocol: TCP
+        {{- end }}
         resources:
         {{- if .Values.deployment.livenessProbe.enabled }}
         livenessProbe:
@@ -71,4 +77,3 @@ spec:
         configMap:
           name: {{ template "configmap.ui.fullname" . }}
       {{- end }}
-        

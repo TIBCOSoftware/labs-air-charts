@@ -24,15 +24,19 @@ spec:
         chart: {{ template "flow.chart" . }}
         component: {{ .Values.deployment.name }}
         release: {{ .Release.Name }}
+      annotations:
+        {{- with .Values.deployment.extraAnnotations }}
+{{- toYaml . | trimSuffix "\n" | nindent 8 }}
+        {{- end }}
     spec:
       {{- if .Values.deployment.securityContext.enabled }}
       securityContext:
         fsGroup: {{ .Values.deployment.securityContext.fsGroup }}
-        runAsUser: {{ .Values.deployment.securityContext.runAsUser }}    
+        runAsUser: {{ .Values.deployment.securityContext.runAsUser }}
       {{- end }}
 {{- include "flow.imagePullSecrets" . | indent 6 }}
       containers:
-      - name: "{{ template "flow.deployment.fullname" . }}"
+      - name: "{{ template "flow.deployment.fullname" . ) | trunc 63}}"
         image: "{{ template "flow.image" . }}"
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
         env:
