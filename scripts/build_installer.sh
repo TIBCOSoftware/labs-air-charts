@@ -40,5 +40,5 @@ then
   build_offline
 fi
 cp -r air-backend ${installer_target_path} || exit 1
-cp ./start.sh ${installer_target_path} || exit 1
-cp ./stop.sh ${installer_target_path} || exit 1
+cp scripts/start.sh ${installer_target_path} || exit 1
+cp scripts/stop.sh ${installer_target_path} || exit 1
