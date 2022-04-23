@@ -12,10 +12,6 @@ load_offline() {
     fi
 }
 
-if [[ "${network_type}" == "offline" ]]; then
-      load_offline || exit 1
-fi
-
 start(){
     if [[ "${arch_type}" == "amd64" ]]; then
         pushd ./air-backend > /dev/null || exit 1
@@ -23,4 +19,10 @@ start(){
         popd || exit 1
     fi
 }
+
+if [[ "${network_type}" == "offline" ]]; then
+      load_offline || exit 1
+fi
+
+start
 
