@@ -1,6 +1,6 @@
 #!/bin/bash
 
-installer_type=${1:?}
+network_type=${1:online}
 
 if [ -e functions.sh ]; then
     # shellcheck disable=SC1091
@@ -24,7 +24,7 @@ cp scripts/functions.sh ${installer_target_path} || exit 1
 
 # Docker compose artifacts
 # Offline artifacts
-if [[ "${installer_type}" == "offline" ]];
+if [[ "${network_type}" == "offline" ]];
 then
   pushd air-backend || exit 1
   ./export.sh || exit 1

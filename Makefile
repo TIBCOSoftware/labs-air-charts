@@ -3,4 +3,4 @@ SCRIPTS_PATH      := scripts
 
 .PHONY: build-installer
 build-installer:
-	@$(SCRIPTS_PATH)/build_installer.sh ${INSTALLER_TYPE}
+	@$(SCRIPTS_PATH)/build_installer.sh ${NETWORK_TYPE}
