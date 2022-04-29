@@ -11,7 +11,7 @@ fi
 
 build_offline(){
   # Offline artifacts
-  pushd ./air-backend/installers/community/${arch_type} || exit 1
+  pushd ./air-backend/installers/community/${arch_type}/air-backend || exit 1
   ./export.sh || exit 1
   popd > /dev/null || exit 1
 }
