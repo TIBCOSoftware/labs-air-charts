@@ -11,15 +11,9 @@ fi
 
 build_offline(){
   # Offline artifacts
-  if [[ "${arch_type}" == "amd64" ]]; then
-      pushd ./air-backend/installers/community/amd64 || exit 1
-      ./export.sh || exit 1
-      popd > /dev/null || exit 1
-  elif [[ "${arch_type}" == "arm64" ]]; then
-      pushd ./air-backend/installers/community/arm64 || exit 1
-      ./export.sh || exit 1
-      popd > /dev/null || exit 1
-  fi
+  pushd ./air-backend/installers/community/${arch_type} || exit 1
+  ./export.sh || exit 1
+  popd > /dev/null || exit 1
 }
 
 installer_target_path="dist"
@@ -40,12 +34,8 @@ if [[ "${network_type}" == "offline" ]];
 then
   build_offline
 fi
-
-if [[ "${arch_type}" == "amd64" ]]; then
-    cp -r ./air-backend/installers/community/amd64 ${installer_target_path} || exit 1
-elif [[ "${arch_type}" == "arm64" ]]; then
-    cp -r ./air-backend/installers/community/arm64 ${installer_target_path} || exit 1
-fi
+    
+cp -r ./air-backend/installers/community/${arch_type} ${installer_target_path} || exit 1
 
 cp scripts/start.sh ${installer_target_path} || exit 1
 cp scripts/stop.sh ${installer_target_path} || exit 1
