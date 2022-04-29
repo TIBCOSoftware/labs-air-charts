@@ -6,7 +6,7 @@ arch_type=${3:?}
 
 load_offline() {
     if [[ "${arch_type}" == "amd64" ]]; then
-        pushd ./${arch_type} > /dev/null || exit 1
+        pushd ./${arch_type}/air-backend > /dev/null || exit 1
         ./load.sh || exit 2
         popd || exit 1
     fi
@@ -14,7 +14,7 @@ load_offline() {
 
 start(){
     if [[ "${arch_type}" == "amd64" ]]; then
-        pushd ./${arch_type} > /dev/null || exit 1
+        pushd ./${arch_type}/air-backend > /dev/null || exit 1
         ./start.sh || exit 2
         popd || exit 1
     fi
