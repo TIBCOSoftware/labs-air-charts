@@ -1,6 +1,7 @@
 #!/bin/bash
 
 network_type=${1:?}
+# shellcheck disable=SC2034
 os_type=${2:?}
 arch_type=${3:?}
 
@@ -11,7 +12,7 @@ fi
 
 build_offline(){
   # Offline artifacts
-  pushd ./air-backend/installers/community/${arch_type}/air-backend || exit 1
+  pushd "./air-backend/installers/community/${arch_type}/air-backend" || exit 1
   ./export.sh || exit 1
   popd > /dev/null || exit 1
 }
@@ -35,7 +36,7 @@ then
   build_offline
 fi
     
-cp -r ./air-backend/installers/community/${arch_type} ${installer_target_path} || exit 1
+cp -r "./air-backend/installers/community/${arch_type}" "${installer_target_path}" || exit 1
 
 cp scripts/start.sh ${installer_target_path} || exit 1
 cp scripts/stop.sh ${installer_target_path} || exit 1
