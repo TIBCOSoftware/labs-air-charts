@@ -1,7 +1,8 @@
 #!/bin/bash
+
 mkdir -p ./archives
 
-# shellcheck disable=SC2059
+# shellcheck source=/dev/null
 source .env
 
 docker-compose pull || exit 1
