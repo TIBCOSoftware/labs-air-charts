@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# shellcheck source=.env
+# shellcheck disable=SC2059
 source .env
 
 docker load --input "./archives/dgraph-${DGRAPH_VERSION}.tar" || exit 1
