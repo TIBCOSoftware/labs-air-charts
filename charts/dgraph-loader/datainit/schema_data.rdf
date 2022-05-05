@@ -1,3 +1,4 @@
+account:string @index(exact, term) .
 uuid:string @index(exact, term)  .
 url:string .
 latitude:float .
@@ -86,11 +87,11 @@ caCertificate:string .
 clientCertificate:string .
 clientKey:string .
 authMode:string .
-serverCerticate:string .
+serverCertificate:string .
 consumerGroupId:string .
 connectionTimeout:string .
 sessionTimeout:string .
-retryBackoff:string .
+retryBackOff:string .
 commitInterval:string .
 initialOffset:string .
 fetchMinBytes:string .
@@ -116,6 +117,7 @@ deployerType:string .
 inputType:string .
 platform:string .
 scope: string .
+fileContent: string .
 gateway_subscription:[uid] @reverse @count .
 gateway_publisher:[uid] @reverse @count .
 gateway_pipeline:[uid] @reverse @count .
@@ -134,6 +136,7 @@ pipeline_datastore:uid @reverse .
 pipeline_filter:uid @reverse .
 pipeline_streaming:uid @reverse .
 type Gateway {
+    account: string
     gateway: string
     type: sring
     uuid: string
@@ -160,6 +163,7 @@ type Gateway {
     <~gateway_model>: uid
 }
 type Publisher {
+    account: string
     name: string
     uuid: string
     type: string
@@ -172,6 +176,7 @@ type Publisher {
     hostname: string
 }
 type Pipeline {
+    account: string
     name: string
     uuid: string
     type: string
@@ -191,6 +196,7 @@ type Pipeline {
     <~pipeline_filter>: uid
 }
 type Rule {
+    account: string
     name: string
     uuid: string
     type: string
@@ -216,6 +222,7 @@ type Rule {
     modified: int
 }
 type ModelConfig {
+    account: string
     name: string
     uuid: string
     type: string
@@ -227,6 +234,7 @@ type ModelConfig {
     modified: int
 }
 type Notification {
+    account: string
     uuid: string
     created: int
     notifySource: string
@@ -237,6 +245,7 @@ type Notification {
     description: string
 }
 type Protocol {
+    account: string
     uuid: string
     created: int
     modified: int
@@ -251,11 +260,11 @@ type Protocol {
     clientCertificate: string
     clientKey: string
     authMode: string
-    serverCerticate: string
+    serverCertificate: string
     consumerGroupId: string
     connectionTimeout: string
     sessionTimeout: string
-    retryBackoff: string
+    retryBackOff: string
     commitInterval: string
     initialOffset: string
     fetchMinBytes: string
@@ -264,6 +273,7 @@ type Protocol {
     scope: string
 }
 type DataStore {
+    account: string
     uuid: string
     created: int
     modified: int
@@ -289,9 +299,11 @@ type DataStore {
     scope: string
 }
 type Filter {
+    account: string
     deviceNames: string
 }
 type Streaming {
+    account: string
     deviceName: string
     instrumentName: string
     function: string
@@ -299,6 +311,7 @@ type Streaming {
     windowSize: int
 }
 type Model {
+    account: string
     uuid: string
     created: int
     modified: int
@@ -309,4 +322,12 @@ type Model {
     platform: string
     scope: string
 }
-
+type PythonResource {
+    account: string
+    name: string
+    created: int
+    modified: int
+    type: string
+    fileContent: string
+    scope: string
+}
