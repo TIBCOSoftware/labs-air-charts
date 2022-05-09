@@ -17,7 +17,7 @@ spec:
     {{- if .Values.deployment.service.nodePort }}
     nodePort: {{ .Values.deployment.service.nodePort }}
     {{- end }}
-    name: ui-http
+    name: {{ .Values.deployment.service.name | default "ui-http" }}
   selector:
     app: {{ template "ui.name" . }}
     chart: {{ template "ui.chart" . }}
