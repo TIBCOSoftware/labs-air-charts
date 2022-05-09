@@ -25,7 +25,8 @@ Create chart name and version as used by the chart label.
 Create a default fully qualified data name.
 */}}
 {{- define "flow.deployment.fullname" -}}
-{{ template "flow.fullname" . }}-{{ .Values.deployment.name }}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- printf "%s-%s-%s" .Release.Name $name .Values.deployment.name | trunc 63 -}}
 {{- end -}}
 
 {{/*
