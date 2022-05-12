@@ -4,11 +4,17 @@ network_type=${1:?}
 # shellcheck disable=SC2034
 os_type=${2:?}
 arch_type=${3:?}
+release_version=${3:?}
 
 if [ -e functions.sh ]; then
     # shellcheck disable=SC1091
     . functions.sh
 fi
+
+replace_release_version(){
+  # Replace release version
+  sed -i 's/# LABS_AIR_VERSION=GENERATED_VERSION/LABS_AIR_VERSION=${release_version}/' "${installer_target_path}/${arch_type}/air-backend/.env"
+}
 
 build_offline(){
   # Offline artifacts
@@ -37,6 +43,8 @@ then
 fi
     
 cp -r "./air-backend/installers/community/${arch_type}" "${installer_target_path}" || exit 1
+
+replace_release_version
 
 cp scripts/start.sh ${installer_target_path} || exit 1
 cp scripts/stop.sh ${installer_target_path} || exit 1
