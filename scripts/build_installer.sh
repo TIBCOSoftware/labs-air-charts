@@ -13,7 +13,7 @@ fi
 
 replace_release_version(){
   # Replace release version
-  sed -i 's/# LABS_AIR_VERSION=GENERATED_VERSION/LABS_AIR_VERSION=${release_version}/' "${installer_target_path}/${arch_type}/air-backend/.env"
+  sed -i  '' "s/LABS_AIR_VERSION=GENERATED_VERSION/LABS_AIR_VERSION=${release_version}/" "${installer_target_path}/${arch_type}/air-backend/.env"
 }
 
 build_offline(){
