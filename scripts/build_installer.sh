@@ -4,7 +4,7 @@ network_type=${1:?}
 # shellcheck disable=SC2034
 os_type=${2:?}
 arch_type=${3:?}
-release_version=${3:?}
+release_version=${4:?}
 
 if [ -e functions.sh ]; then
     # shellcheck disable=SC1091
