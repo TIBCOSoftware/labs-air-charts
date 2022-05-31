@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.7.0-970](https://github.com/TIBCOSoftware/labs-air-charts/compare/v0.7.0-812...v0.7.0-970) (2022-05-31)
+
+
+### Features
+
+* **charts:** add annotations that are useful for cluster deploment ([dfacbd6](https://github.com/TIBCOSoftware/labs-air-charts/commits/dfacbd6dcc50ec2d17630887a2c95b121ed3f5d3))
+
+
+### Bugfixes
+
+* **api:** addresses typos, adds PythonResource, and account field ([3e351f8](https://github.com/TIBCOSoftware/labs-air-charts/commits/3e351f8d819494c7293da3335fe1a008bdeb4385))
+* truncate the container name variable so that it was fits within 63 characters ([9e2db0e](https://github.com/TIBCOSoftware/labs-air-charts/commits/9e2db0e6c8847e55556f465bc9121efdc015eb43))
+
 ## [0.7.0-812](https://github.com/TIBCOSoftware/labs-air-charts/compare/v0.7.0-725...v0.7.0-812) (2022-04-25)
 
 ## [0.7.0-725](https://github.com/TIBCOSoftware/labs-air-charts/compare/v0.6.0...v0.7.0-725) (2022-04-01)
