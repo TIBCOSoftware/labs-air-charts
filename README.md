@@ -1,4 +1,4 @@
-# Project AIR
+# Project AIR 
 
 Project AIR is an IoT platform for the registration of devices, process of IoT produced data and definition, deployment and configuration of Application pipelines.
 
