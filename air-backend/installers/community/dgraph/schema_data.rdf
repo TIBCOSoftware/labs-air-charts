@@ -1,0 +1,333 @@
+account:string @index(exact, term) .
+uuid:string @index(exact, term)  .
+url:string .
+latitude:float .
+longitude:float .
+accessToken: string .
+createdts: int @index(int) .
+updatedts: int @index(int) .
+name:string .
+operatingState: string .
+adminState: string .
+description: string .
+value: string .
+created: int @index(int) .
+origin: int @index(int) .
+modified: int @index(int) .
+consumer:string .
+publisher:string .
+destination:string .
+protocol:string .
+method:string .
+address:string .
+router: string .
+routerPort: string .
+deployNetwork: string .
+devicesMetadata: string .
+port:int .
+path:string .
+format:string .
+enabled:bool .
+user:string .
+password:string .
+topic:string .
+encryptionAlgorithm:string .
+encryptionKey:string .
+initializingVector:string .
+compression:string .
+deviceIdentifierFilter:string .
+valueDescriptorFilter:string .
+useInferredValue: bool .
+condDevice:string .
+condResource: string .
+condCompareNewMetricToValue: bool .
+condCompareNewMetricToValueOp: string .
+condCompareNewMetricValue: string .
+condCompareNewMetricToLastMetric: bool .
+condCompareNewMetricToLastMetricOp: string .
+condCompareLastMetricToValue: bool .
+condCompareLastMetricToValueOp: string .
+condCompareLastMetricValue: string .
+actionSendNotification: bool .
+actionNotification: string .
+actionSendCommand: bool .
+actionDevice: string .
+actionResource: string .
+actionValue: string .
+model: string .
+notifySource:string .
+notifyDevice:string .
+notifyResource:string .
+notifyLevel:string .
+type:string @index(exact, term) .
+gateway:string .
+device:string .
+resource:string .
+reading:string .
+subscription:string .
+profile:string .
+notification:string .
+rule:string .
+deviceName:string .
+instrumentName:string .
+function:string .
+windowType:string .
+windowSize:int .
+deviceNames:string .
+hostname:string .
+status:string .
+flowConfiguration:string .
+logLevel:string .
+pipeline:string .
+brokerURL:string .
+maximumQOS:string .
+username:string .
+encryptionMode:string .
+caCertificate:string .
+clientCertificate:string .
+clientKey:string .
+authMode:string .
+serverCertificate:string .
+consumerGroupId:string .
+connectionTimeout:string .
+sessionTimeout:string .
+retryBackOff:string .
+commitInterval:string .
+initialOffset:string .
+fetchMinBytes:string .
+fetchMaxWait:string .
+heartbeatInterval:string .
+host:string .
+databaseName:string .
+accountName:string .
+warehouse:string .
+database:string .
+schema:string .
+authType:string .
+role:string .
+clientId:string .
+clientSecret:string .
+authorizationCode:string .
+redirectURI:string .
+loginTimeout:string .
+protocolType:string .
+dataStoreType:string .
+pipelineType:string .
+deployerType:string .
+inputType:string .
+platform:string .
+scope: string .
+fileContent: string .
+gateway_subscription:[uid] @reverse @count .
+gateway_publisher:[uid] @reverse @count .
+gateway_pipeline:[uid] @reverse @count .
+gateway_device:[uid]  @reverse @count .
+gateway_notification:[uid] @reverse @count .
+gateway_rule: [uid] @reverse @count .
+gateway_modelconfig: [uid] @reverse @count .
+gateway_datastore: [uid] @reverse @count .
+gateway_protocol: [uid] @reverse @count .
+gateway_model: [uid] @reverse @count .
+gateway_filter: [uid] @reverse .
+device_resource:[uid] @reverse @count .
+resource_reading:[uid] @reverse @count .
+pipeline_protocol:uid @reverse .
+pipeline_datastore:uid @reverse .
+pipeline_filter:uid @reverse .
+pipeline_streaming:uid @reverse .
+type Gateway {
+    account: string
+    gateway: string
+    type: sring
+    uuid: string
+    description: string
+    address: string
+    router: string
+    routerPort: string
+    deployNetwork: string
+    latitude: float
+    longitude: float
+    accessToken: string
+    platform: string
+    username: string
+    devicesMetadata: string
+    createdts: int
+    updatedts: int
+    <~gateway_device>: uid
+    <~gateway_notification>: uid
+    <~gateway_pipeline>: uid
+    <~gateway_publisher>: uid
+    <~gateway_rule>: uid
+    <~gateway_datastore>: uid
+    <~gateway_protocol>: uid
+    <~gateway_model>: uid
+}
+type Publisher {
+    account: string
+    name: string
+    uuid: string
+    type: string
+    publisher: string
+    port: int
+    protocol: string
+    created: int
+    modified: int
+    topic: string
+    hostname: string
+}
+type Pipeline {
+    account: string
+    name: string
+    uuid: string
+    type: string
+    pipeline: string
+    pipelineType: string
+    deployerType: string
+    protocolType: string
+    dataStoreType: string
+    created: int
+    modified: int
+    description: string
+    status: string
+    flowConfiguration: string
+    logLevel: string
+    <~pipeline_protocol>: uid
+    <~pipeline_datastore>: uid
+    <~pipeline_filter>: uid
+}
+type Rule {
+    account: string
+    name: string
+    uuid: string
+    type: string
+    description: string
+    useInferredValue: bool
+    condDevice: string
+    condResource: string
+    condCompareNewMetricToValue: bool
+    condCompareNewMetricToValueOp: string
+    condCompareNewMetricValue: string
+    condCompareNewMetricToLastMetric: bool
+    condCompareNewMetricToLastMetricOp: string
+    condCompareLastMetricToValue: bool
+    condCompareLastMetricToValueOp: string
+    condCompareLastMetricValue: string
+    actionSendNotification: bool
+    actionNotification: string
+    actionSendCommand: bool
+    actionDevice: string
+    actionResource: string
+    actionValue: string
+    created: int
+    modified: int
+}
+type ModelConfig {
+    account: string
+    name: string
+    uuid: string
+    type: string
+    description: string
+    device: string
+    resource: string
+    model: string
+    created: int
+    modified: int
+}
+type Notification {
+    account: string
+    uuid: string
+    created: int
+    notifySource: string
+    notifyDevice: string
+    notifyResource: string
+    notifyLevel: string
+    value: string
+    description: string
+}
+type Protocol {
+    account: string
+    uuid: string
+    created: int
+    modified: int
+    protocolType: string
+    brokerURL: string
+    topic: string
+    maximumQOS: string
+    username: string
+    password: string
+    encryptionMode: string
+    caCertificate: string
+    clientCertificate: string
+    clientKey: string
+    authMode: string
+    serverCertificate: string
+    consumerGroupId: string
+    connectionTimeout: string
+    sessionTimeout: string
+    retryBackOff: string
+    commitInterval: string
+    initialOffset: string
+    fetchMinBytes: string
+    fetchMaxWait: string
+    heartbeatInterval: string
+    scope: string
+}
+type DataStore {
+    account: string
+    uuid: string
+    created: int
+    modified: int
+    dataStoreType: string
+    host: string
+    port: int
+    databaseName: string
+    user: string
+    password: string
+    accountName: string
+    warehouse: string
+    database: string
+    schema: string
+    authType: string
+    username: string
+    role: string
+    clientId: string
+    clientSecret: string
+    authorizationCode: string
+    redirectURI: string
+    loginTimeout: string
+    url: string
+    scope: string
+}
+type Filter {
+    account: string
+    deviceNames: string
+}
+type Streaming {
+    account: string
+    deviceName: string
+    instrumentName: string
+    function: string
+    windowType: string
+    windowSize: int
+}
+type Model {
+    account: string
+    uuid: string
+    created: int
+    modified: int
+    name: string
+    description: string
+    inputType: string
+    url: string
+    platform: string
+    scope: string
+}
+type PythonResource {
+    account: string
+    name: string
+    created: int
+    modified: int
+    type: string
+    fileContent: string
+    scope: string
+}
