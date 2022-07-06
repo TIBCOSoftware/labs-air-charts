@@ -42,7 +42,7 @@ then
   build_offline
 fi
     
-cp -r "./air-backend/installers/community" "${installer_target_path}" || exit 1
+cp -r "./air-backend/installers/community/." "${installer_target_path}" || exit 1
 
 replace_release_version
 
