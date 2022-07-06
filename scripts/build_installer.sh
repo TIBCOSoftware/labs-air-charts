@@ -13,13 +13,13 @@ fi
 
 replace_release_version(){
   # Replace release version
-  sed -i  "s/LABS_AIR_VERSION=GENERATED_VERSION/LABS_AIR_VERSION=${release_version}/" "${installer_target_path}/${arch_type}/air-backend/.env"
+  sed -i  "s/LABS_AIR_VERSION=GENERATED_VERSION/LABS_AIR_VERSION=${release_version}/" "${installer_target_path}/air-backend/.env"
 }
 
 build_offline(){
   # Offline artifacts
-  pushd "./air-backend/installers/community/${arch_type}/air-backend" || exit 1
-  ./export.sh || exit 1
+  pushd "./air-backend/installers/community/air-backend" || exit 1
+  ./export.sh ${arch_type} || exit 1
   popd > /dev/null || exit 1
 }
 
@@ -42,7 +42,7 @@ then
   build_offline
 fi
     
-cp -r "./air-backend/installers/community/${arch_type}" "${installer_target_path}" || exit 1
+cp -r "./air-backend/installers/community" "${installer_target_path}" || exit 1
 
 replace_release_version
 
