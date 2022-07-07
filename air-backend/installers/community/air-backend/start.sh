@@ -2,7 +2,7 @@
 
 if [ -e ../../functions.sh ]; then
     # shellcheck disable=SC1091
-    . ../../functions.sh
+    . ../functions.sh
 fi
 
 if [ -n "$1" ]; then
