@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -e ../../functions.sh ]; then
+if [ -e ../functions.sh ]; then
     # shellcheck disable=SC1091
     . ../functions.sh
 fi
