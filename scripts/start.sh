@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 network_type=${1:?}
 # shellcheck disable=SC2034
 os_type=${2:?}
