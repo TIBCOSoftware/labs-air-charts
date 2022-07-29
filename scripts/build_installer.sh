@@ -31,9 +31,9 @@ fi
 mkdir -p ${installer_target_path} || exit 1
 
 
-cp scripts/delete_* ${installer_target_path} || exit 1
-cp scripts/install_* ${installer_target_path} || exit 1
-cp scripts/functions.sh ${installer_target_path} || exit 1
+# cp scripts/delete_* ${installer_target_path} || exit 1
+# cp scripts/install_* ${installer_target_path} || exit 1
+cp ./scripts/functions.sh ${installer_target_path} || exit 1
 
 # Docker compose artifacts
 # Offline artifacts
