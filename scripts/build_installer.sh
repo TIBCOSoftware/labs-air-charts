@@ -33,7 +33,7 @@ mkdir -p ${installer_target_path} || exit 1
 
 # cp scripts/delete_* ${installer_target_path} || exit 1
 # cp scripts/install_* ${installer_target_path} || exit 1
-cp ./scripts/functions.sh ${installer_target_path} || exit 1
+# cp ./scripts/functions.sh ${installer_target_path} || exit 1
 
 # Docker compose artifacts
 # Offline artifacts
@@ -46,8 +46,8 @@ cp -r "./air-backend/installers/community/." "${installer_target_path}" || exit 
 
 replace_release_version
 
-if [[ "${os_type}" != windows ]];
-  then
-    cp scripts/start.sh ${installer_target_path} || exit 1
-    cp scripts/stop.sh ${installer_target_path} || exit 1
-  fi
+# if [[ "${os_type}" != windows ]];
+#   then
+#     cp scripts/start.sh ${installer_target_path} || exit 1
+#     cp scripts/stop.sh ${installer_target_path} || exit 1
+#   fi
