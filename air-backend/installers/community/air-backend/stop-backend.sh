@@ -14,3 +14,4 @@ else
 fi
 
 docker-compose down -v
+echo ""
