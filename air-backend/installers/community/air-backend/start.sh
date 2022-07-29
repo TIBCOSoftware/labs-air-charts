@@ -13,7 +13,7 @@ load_offline() {
 
 start(){
     # pushd "./air-backend" > /dev/null || exit 1
-    ./start.sh ${arch_type} || exit 2
+    ./start-backend.sh ${arch_type} || exit 2
     # popd || exit 1
 }
 
