@@ -1,6 +1,6 @@
 @echo off
 
-set ARCH=""
+set ARCH=
 
 
 call start-backend.cmd $ARCH
