@@ -1,6 +1,6 @@
 @echo off
 
-set ARCH=""
+set ARCH=
 
 docker-compose rm -f
 docker-compose up -d

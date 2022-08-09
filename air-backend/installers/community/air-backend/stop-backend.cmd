@@ -1,5 +1,5 @@
 @echo off
 
-set ARCH=""
+set ARCH=
 
 docker-compose down -v
