@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.8.0-164](https://github.com/TIBCOSoftware/labs-air-charts/compare/v0.8.0-141...v0.8.0-164) (2022-08-11)
+
+
+### Features
+
+* updated templates to provide extraAnnotations ([a386fea](https://github.com/TIBCOSoftware/labs-air-charts/commits/a386fea3c0b377f31ddd57c8a911e418c7eea512))
+
 ## [0.8.0-141](https://github.com/TIBCOSoftware/labs-air-charts/compare/v0.8.0-80...v0.8.0-141) (2022-08-03)
 
 ## [0.8.0-80](https://github.com/TIBCOSoftware/labs-air-charts/compare/v0.7.0-970...v0.8.0-80) (2022-08-03)
